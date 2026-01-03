@@ -1,0 +1,57 @@
+Todolist.jsx
+
+import { useState } from "react";
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [text, setText] = useState("");
+
+  const addTask = () => {
+    setTasks([...tasks, { name: text }]);
+    setText("");
+  };
+
+  const deleteTask = (index) => {
+    const newTasks = tasks.filter((task, i) => i !== index);
+    setTasks(newTasks);
+  };
+
+  return (
+    <>
+      <h1>To-Do List</h1>
+
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Enter Task"
+      />
+
+      <button onClick={addTask}>Add</button>
+
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            <span>{task.name}</span>
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default App;
+
+main.jsx
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import Todolist from './Todolist.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Todolist/>
+  </StrictMode>,
+)
+
